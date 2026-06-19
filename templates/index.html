@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>California Housing Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 California Housing Price Predictor</h1>
+        <p class="subtitle">Multi-Linear Regression Model</p>
+        
+        <div class="info-box">
+            <h3>About This Model</h3>
+            <p>This application uses a Multi-Linear Regression model trained on the California Housing dataset. 
+            Enter the features below to predict the median house value in $100,000s.</p>
+            <a href="/model-info" class="btn-link">View Model Details</a>
+        </div>
+        
+        <form action="/predict" method="POST" class="prediction-form">
+            <h2>Enter Property Features</h2>
+            
+            <div class="form-grid">
+                {% for feature in features %}
+                <div class="form-group">
+                    <label for="{{ feature }}">
+                        {{ feature }}
+                        <span class="tooltip" title="{{ descriptions[feature] }}">ℹ️</span>
+                    </label>
+                    <input type="number" 
+                           id="{{ feature }}" 
+                           name="{{ feature }}" 
+                           step="any" 
+                           required 
+                           placeholder="Enter value">
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="example-values">
+                <h4>Example Values:</h4>
+                <p>MedInc: 8.3252 | HouseAge: 41 | AveRooms: 6.98 | AveBedrms: 1.02</p>
+                <p>Population: 322 | AveOccup: 2.55 | Latitude: 37.88 | Longitude: -122.23</p>
+            </div>
+            
+            <button type="submit" class="btn-predict">Predict Price</button>
+        </form>
+        
+        <div class="api-info">
+            <h3>API Endpoint</h3>
+            <p>You can also use the REST API:</p>
+            <code>POST /api/predict</code>
+            <p>Send JSON with feature values to get predictions programmatically.</p>
+        </div>
+    </div>
+</body>
+</html>

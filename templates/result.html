@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Prediction Result</h1>
+        
+        {% if error %}
+        <div class="error-box">
+            <h3>Error</h3>
+            <p>{{ error }}</p>
+        </div>
+        {% else %}
+        <div class="result-box">
+            <h2>Predicted House Price</h2>
+            <div class="price">{{ prediction }}</div>
+            <p class="price-note">(Value in $100,000s: {{ "%.4f"|format(prediction_raw) }})</p>
+        </div>
+        
+        <div class="input-summary">
+            <h3>Input Summary</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feature in features %}
+                    <tr>
+                        <td>{{ feature }}</td>
+                        <td>{{ "%.4f"|format(input_summary[feature]) }}</td>
+                        <td>{{ descriptions[feature] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        
+        <div class="action-buttons">
+            <a href="/" class="btn-back">Make Another Prediction</a>
+        </div>
+    </div>
+</body>
+</html>

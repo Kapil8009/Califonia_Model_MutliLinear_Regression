@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Model Information</h1>
+        
+        <div class="model-details">
+            <h2>Multi-Linear Regression Model</h2>
+            <p><strong>Dataset:</strong> California Housing (1990 Census)</p>
+            <p><strong>Intercept:</strong> {{ "%.4f"|format(intercept) }}</p>
+            
+            <h3>Feature Coefficients</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Coefficient</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(features|length) %}
+                    <tr>
+                        <td>{{ features[i] }}</td>
+                        <td>{{ "%.6f"|format(coefficients[i]) }}</td>
+                        <td>{{ "Positive" if coefficients[i] > 0 else "Negative" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="plots">
+            <h3>Model Visualizations</h3>
+            <div class="plot-grid">
+                <div class="plot">
+                    <h4>Actual vs Predicted</h4>
+                    <img src="{{ url_for('static', filename='plots/actual_vs_predicted.png') }}" alt="Actual vs Predicted">
+                </div>
+                <div class="plot">
+                    <h4>Residuals</h4>
+                    <img src="{{ url_for('static', filename='plots/residuals.png') }}" alt="Residuals">
+                </div>
+                <div class="plot">
+                    <h4>Feature Importance</h4>
+                    <img src="{{ url_for('static', filename='plots/feature_importance.png') }}" alt="Feature Importance">
+                </div>
+                <div class="plot">
+                    <h4>Correlation Heatmap</h4>
+                    <img src="{{ url_for('static', filename='plots/correlation_heatmap.png') }}" alt="Correlation Heatmap">
+                </div>
+            </div>
+        </div>
+        
+        <a href="/" class="btn-back">Back to Predictor</a>
+    </div>
+</body>
+</html>
